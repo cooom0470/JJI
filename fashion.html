@@ -83,10 +83,13 @@ document.getElementById('request-form').addEventListener('submit', function(even
     })
     .then(response => response.json())
     .then(data => {
+        console.log("Response received:", data);  // 응답 로그
         document.getElementById('ai-response').innerHTML = data.result;  // 결과 표시
     })
-    .catch(error => console.error('Error:', error));
-});
+    .catch(error => {
+        console.error('Error:', error);
+        alert('서버 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    });
 
 document.getElementById('file-upload').addEventListener('change', function(event) {
     var file = event.target.files[0];

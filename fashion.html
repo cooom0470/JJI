@@ -48,8 +48,8 @@
                 <h2>사진 업로드 또는 카메라로 찍기</h2>
                 <input type="file" accept="image/*" capture="camera" id="file-upload" name="file" required>
                 <label for="file-upload">사진 선택</label>
-                <div id="image-preview" style="margin-top: 10px;">
-                    <!-- 미리보기가 여기 표시됩니다 -->
+                <div id="image-preview" style="margin-top: 10px; border: 1px solid red; max-width: 100%; max-height: 200px;">
+                <!-- 미리보기가 여기 표시됩니다 -->
                 </div>
             </div>
             <div class="custom-request">
@@ -99,6 +99,24 @@ document.getElementById('file-upload').addEventListener('change', function(event
         reader.readAsDataURL(file);
     }
 });
+document.getElementById('file-upload').addEventListener('change', function(event) {
+    var file = event.target.files[0];
+    if (file) {
+        console.log("File selected:", file.name);  // 파일 이름 출력
+        console.log("File type:", file.type);      // 파일 타입 출력
+        console.log("File size:", file.size);      // 파일 크기 출력
+        
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            console.log("File loaded successfully");  // 파일 로드 성공 여부 출력
+            var preview = document.getElementById('image-preview');
+            preview.innerHTML = '<img src="' + e.target.result + '" alt="Image Preview" style="max-width: 100%; max-height: 200px;">';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        console.log("No file selected.");
+    }
+});  
 </script>
 
 </body>

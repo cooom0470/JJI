@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Park's Fashion AI Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 기존 스타일 코드 유지 */
+        @import url('https://fonts.googleapis.com/css2?family=Lugrasimo&family=Nanum+Pen+Script&display=swap');
+        .lugrasimo-regular { font-family: "Lugrasimo", cursive; font-weight: 400; font-style: normal; }
+        .nanum-pen-script-regular { font-family: "Nanum Pen Script", cursive; font-size: 20px; font-weight: 400; font-style: normal; }
+        body, html { height: 100%; margin: 0; overflow-x: hidden; }
+        .bg-image { background-image: url('AI_half_trans.png'); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; position: fixed; left: 0; right: 0; z-index: -1; }
+        .content { position: relative; z-index: 1; padding: 20px; display: flex; transition: margin-right 0.3s ease; }
+        .header { padding: 20px; text-align: center; background-color: #343a40; color: white; }
+        .nav { overflow: hidden; background-color: #007bff; padding: 0 20px; position: relative; z-index: 2; }
+        .nav a { float: left; color: white; text-align: center; padding: 14px 16px; text-decoration: none; font-size: 17px; transition: background-color 0.3s; }
+        .footer { background-color: #343a40; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%; }
+        .photo-upload { text-align: center; }
+        .photo-upload input[type="file"] { display: none; }
+        .photo-upload label { display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+        .photo-upload label:hover { background-color: #0056b3; }
+        textarea { width: 100%; height: 100px; margin-top: 10px; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ddd; }
+        input[type="submit"], .view-image-btn { display: inline-block; margin-top: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        input[type="submit"]:hover, .view-image-btn:hover { background-color: #0056b3; }
+        .ai-response { margin-top: 20px; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; padding: 20px; font-size: 16px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="bg-image"></div>
+<div class="header">
+    <h1 class="shadow">Park's Fashion AI Chat</h1>
+</div>
+<div class="nav">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="Introduc.html"><i class="fas fa-users"></i> Introduce</a>
+    <a href="fashion.html"><i class="fas fa-tshirt"></i> Fashion</a>
+    <a href="Regist.html" class="right"><i class="fas fa-user-plus"></i> Regist</a>
+    <a href="Login.html" class="right"><i class="fas fa-sign-in-alt"></i> Log in</a>
+    <a href="javascript:void(0);" class="right" onclick="toggleHistory()"><i class="fas fa-history"></i> History</a>
+</div>
+
+<div class="content" id="content">
+    <div class="left-section">
+        <!-- Flask 서버로 요청 전송하는 form 추가 -->
+        <form id="request-form" method="POST" enctype="multipart/form-data">
+            <div class="photo-upload">
+                <h2>사진 업로드 또는 카메라로 찍기</h2>
+                <input type="file" accept="image/*" capture="camera" id="file-upload" name="file">
+                <label for="file-upload">사진 선택</label>
+            </div>
+            <div class="custom-request">
+                <h2>패션 요청 작성</h2>
+                <textarea class="nanum-pen-script-regular" name="fashion_request" id="fashion-request" placeholder="'20대 여성의 봄 캐주얼 옷 추천해줘'와 같이 작성해주세요."></textarea>
+                <input type="submit" value="요청 제출">
+            </div>
+        </form>
+        <div class="ai-response" id="ai-response">
+            {{ result }} <!-- Flask 서버에서 전달된 결과가 여기에 표시됩니다 -->
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <a href="#about"><i class="fas fa-info-circle"></i> About Us</a> |
+    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a> |
+    <a href="#terms"><i class="fas fa-file-alt"></i> Terms</a>
+    <p>&copy; 2024 Park's Emotion LAB. All rights reserved.</p>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+function toggleHistory() {
+    var historySection = document.getElementById('history-section');
+    historySection.classList.toggle("open");
+}
+</script>
+
+</body>
+</html>

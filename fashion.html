@@ -74,7 +74,7 @@ document.getElementById('request-form').addEventListener('submit', function(even
     event.preventDefault();
     var formData = new FormData(this);
     
-    fetch('https://e52d-104-196-144-59.ngrok-free.app/', {  // Flask 서버의 Public URL 사용
+    fetch('https://40fb-104-196-144-59.ngrok-free.app', {  // Flask 서버의 Public URL 사용
         method: 'POST',
         body: formData
     })

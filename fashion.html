@@ -72,35 +72,6 @@
 </div>
 
 <script>
-document.getElementById('request-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    var formData = new FormData(this);
-    
-    fetch('https://48ce-104-196-144-59.ngrok-free.app/', {  // Flask 서버의 Public URL 사용
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Response received:", data);  // 응답 로그
-        document.getElementById('ai-response').innerHTML = data.result;  // 결과 표시
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('서버 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
-    });
-
-document.getElementById('file-upload').addEventListener('change', function(event) {
-    var file = event.target.files[0];
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var preview = document.getElementById('image-preview');
-            preview.innerHTML = '<img src="' + e.target.result + '" alt="Image Preview" style="max-width: 100%; max-height: 200px;">';
-        };
-        reader.readAsDataURL(file);
-    }
-});
 document.getElementById('file-upload').addEventListener('change', function(event) {
     var file = event.target.files[0];
     if (file) {
@@ -118,6 +89,25 @@ document.getElementById('file-upload').addEventListener('change', function(event
     } else {
         console.log("No file selected.");
     }
+});
+
+document.getElementById('request-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    
+    fetch('https://48ce-104-196-144-59.ngrok-free.app/', {  // Flask 서버의 Public URL 사용
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Response received:", data);  // 응답 로그
+        document.getElementById('ai-response').innerHTML = data.result;  // 결과 표시
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('서버 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    });
 });  
 </script>
 

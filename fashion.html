@@ -6,7 +6,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-        /* 기존 스타일 코드 유지 */
         @import url('https://fonts.googleapis.com/css2?family=Lugrasimo&family=Nanum+Pen+Script&display=swap');
         .lugrasimo-regular { font-family: "Lugrasimo", cursive; font-weight: 400; font-style: normal; }
         .nanum-pen-script-regular { font-family: "Nanum Pen Script", cursive; font-size: 20px; font-weight: 400; font-style: normal; }
@@ -44,21 +43,20 @@
 
 <div class="content" id="content">
     <div class="left-section">
-        <!-- Flask 서버로 요청 전송하는 form 추가 -->
-        <form id="request-form" method="POST" enctype="multipart/form-data">
+        <form id="request-form" enctype="multipart/form-data">
             <div class="photo-upload">
                 <h2>사진 업로드 또는 카메라로 찍기</h2>
-                <input type="file" accept="image/*" capture="camera" id="file-upload" name="file">
+                <input type="file" accept="image/*" capture="camera" id="file-upload" name="file" required>
                 <label for="file-upload">사진 선택</label>
             </div>
             <div class="custom-request">
                 <h2>패션 요청 작성</h2>
-                <textarea class="nanum-pen-script-regular" name="fashion_request" id="fashion-request" placeholder="'20대 여성의 봄 캐주얼 옷 추천해줘'와 같이 작성해주세요."></textarea>
+                <textarea class="nanum-pen-script-regular" name="fashion_request" id="fashion-request" placeholder="'20대 여성의 봄 캐주얼 옷 추천해줘'와 같이 작성해주세요." required></textarea>
                 <input type="submit" value="요청 제출">
             </div>
         </form>
         <div class="ai-response" id="ai-response">
-            {{ result }} <!-- Flask 서버에서 전달된 결과가 여기에 표시됩니다 -->
+            <!-- 추천 결과가 여기에 표시됩니다 -->
         </div>
     </div>
 </div>
@@ -76,6 +74,21 @@ function toggleHistory() {
     var historySection = document.getElementById('history-section');
     historySection.classList.toggle("open");
 }
+
+document.getElementById('request-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    
+    fetch('/', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('ai-response').innerHTML = data; // 서버 응답 결과 표시
+    })
+    .catch(error => console.error('Error:', error));
+});
 </script>
 
 </body>

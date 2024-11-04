@@ -70,26 +70,22 @@
 
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script>
-function toggleHistory() {
-    var historySection = document.getElementById('history-section');
-    historySection.classList.toggle("open");
-}
-
 document.getElementById('request-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    var formData = new FormData(this);
+    event.preventDefault();  // 기본 제출 동작 방지
+    var formData = new FormData(this);  // 폼 데이터 수집
     
-    fetch('/', {
+    fetch('http://3f17-104-196-144-59.ngrok-free.app', {  // 여기에 Colab에서 제공된 ngrok URL을 입력
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
+    .then(response => response.json())  // 응답을 JSON으로 변환
     .then(data => {
-        document.getElementById('ai-response').innerHTML = data; // 서버 응답 결과 표시
+        document.getElementById('ai-response').innerHTML = data.result;  // 결과 표시
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error));  // 에러 처리
 });
 </script>
+
 
 </body>
 </html>

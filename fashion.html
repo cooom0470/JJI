@@ -48,6 +48,9 @@
                 <h2>사진 업로드 또는 카메라로 찍기</h2>
                 <input type="file" accept="image/*" capture="camera" id="file-upload" name="file" required>
                 <label for="file-upload">사진 선택</label>
+                <div id="image-preview" style="margin-top: 10px;">
+                    <!-- 미리보기가 여기 표시됩니다 -->
+                </div>
             </div>
             <div class="custom-request">
                 <h2>패션 요청 작성</h2>
@@ -84,9 +87,19 @@ document.getElementById('request-form').addEventListener('submit', function(even
     })
     .catch(error => console.error('Error:', error));
 });
+
+document.getElementById('file-upload').addEventListener('change', function(event) {
+    var file = event.target.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var preview = document.getElementById('image-preview');
+            preview.innerHTML = '<img src="' + e.target.result + '" alt="Image Preview" style="max-width: 100%; max-height: 200px;">';
+        };
+        reader.readAsDataURL(file);
+    }
+});
 </script>
-
-
 
 </body>
 </html>

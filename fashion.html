@@ -95,11 +95,17 @@ document.getElementById('request-form').addEventListener('submit', function(even
     event.preventDefault();
     var formData = new FormData(this);
     
-    fetch('https://67a0-34-138-251-64.ngrok-free.app', {  // Flask 서버의 Public URL 사용
+    fetch('https://1a16-34-138-251-64.ngrok-free.app', {  // Flask 서버의 Public URL 사용
         method: 'POST',
         body: formData,
+        credentials: 'same-origin' // CORS 문제 해결을 위한 설정
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log("Response received:", data);  // 응답 로그
         document.getElementById('ai-response').innerHTML = data.result;  // 결과 표시

@@ -95,7 +95,7 @@ document.getElementById('request-form').addEventListener('submit', function(even
     event.preventDefault();
     var formData = new FormData(this);
     
-    fetch('https://7305-34-80-163-115.ngrok-free.app', {  // Flask 서버의 Public URL 사용
+    fetch('https://7305-34-80-163-115.ngrok-free.app/fashion', {  // Flask 서버의 Public URL 사용
         method: 'POST',
         body: formData,
         credentials: 'same-origin' // CORS 문제 해결을 위한 설정

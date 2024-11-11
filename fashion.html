@@ -94,11 +94,9 @@ document.getElementById('file-upload').addEventListener('change', function(event
 document.getElementById('request-form').addEventListener('submit', function(event) {
     event.preventDefault();
     var formData = new FormData(this);
-    
-    fetch('https://f8cc-34-80-163-115.ngrok-free.app/fashion', {  // Flask 서버의 Public URL 사용
-        method: 'POST',
-        body: formData,
-        credentials: 'same-origin' // CORS 문제 해결을 위한 설정
+    fetch('https://f8cc-34-80-163-115.ngrok-free.app/fashion?timestamp=${new Date().getTime()}', {
+    method: 'POST',
+    body: formData
     })
     .then(response => {
         if (!response.ok) {
